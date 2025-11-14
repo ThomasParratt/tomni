@@ -6,12 +6,12 @@ import bookings from './data/bookings'
 
 
 export default function App() {
-  //const [bookings, setBookings] = useState([])
+  const [bookings, setBookings] = useState([])
 
 
   useEffect(()=> {
     const stored = localStorage.getItem('bookings')
-    //if(stored) setBookings(JSON.parse(stored))
+    if(stored) setBookings(JSON.parse(stored))
   }, [])
 
 
@@ -30,7 +30,7 @@ export default function App() {
       <h1 className="text-3xl font-bold mb-6 text-center">My Calendar App</h1>
       <div className="flex flex-col md:flex-row gap-6">
         <div className="md:w-2/3">
-          <Calendar bookings={bookings} />
+          <Calendar bookings={bookings} addBooking={addBooking}/>
         </div>
         <div className="md:w-1/3 flex flex-col gap-6">
           <BookingForm addBooking={addBooking} />
