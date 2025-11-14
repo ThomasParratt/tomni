@@ -1,35 +1,41 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState, useEffect } from 'react'
+import Calendar from './components/Calendar'
+import BookingForm from './components/BookingForm'
+import BookingList from './components/BookingList'
 
-function App() {
-  const [count, setCount] = useState(0)
+
+export default function App() {
+  const [bookings, setBookings] = useState([])
+
+
+  useEffect(()=> {
+    const stored = localStorage.getItem('bookings')
+    if(stored) setBookings(JSON.parse(stored))
+  }, [])
+
+
+  useEffect(()=> {
+    localStorage.setItem('bookings', JSON.stringify(bookings))
+  }, [bookings])
+
+
+  const addBooking = (booking)=> {
+    setBookings(prev => [...prev, booking])
+  }
+
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="min-h-screen bg-gray-50 p-6">
+      <h1 className="text-3xl font-bold mb-6 text-center">My Calendar App</h1>
+      <div className="flex flex-col md:flex-row gap-6">
+        <div className="md:w-2/3">
+          <Calendar bookings={bookings} />
+        </div>
+        <div className="md:w-1/3 flex flex-col gap-6">
+          <BookingForm addBooking={addBooking} />
+          <BookingList bookings={bookings} />
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   )
 }
-
-export default App
