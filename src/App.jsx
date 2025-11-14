@@ -2,15 +2,16 @@ import React, { useState, useEffect } from 'react'
 import Calendar from './components/Calendar'
 import BookingForm from './components/BookingForm'
 import BookingList from './components/BookingList'
+import bookings from './data/bookings'
 
 
 export default function App() {
-  const [bookings, setBookings] = useState([])
+  //const [bookings, setBookings] = useState([])
 
 
   useEffect(()=> {
     const stored = localStorage.getItem('bookings')
-    if(stored) setBookings(JSON.parse(stored))
+    //if(stored) setBookings(JSON.parse(stored))
   }, [])
 
 
